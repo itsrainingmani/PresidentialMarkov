@@ -12,6 +12,7 @@ INAUG_PAGE = "https://avalon.law.yale.edu/subject_menus/inaug.asp"
 BASE_URL = "https://avalon.law.yale.edu"
 
 OBAMA_URL = "https://avalon.law.yale.edu/21st_century/obama.asp"
+LINCOLN_URL = 'https://avalon.law.yale.edu/19th_century/lincoln1.asp'
 
 def get_all_speech_links():
   PRES_TUPS = []
@@ -31,10 +32,13 @@ def get_all_speech_links():
 def extract_speech_from_page(response):
   soup = BeautifulSoup(response.text, 'html.parser')
   speech = ""
-  for p in soup.find_all('p'):
-    speech += p.getText() + "\n"
+  
+  text_prop_div = soup.find('div', class_='text-properties')
 
-  return
+  for p in text_prop_div.find_all('p'):
+    speech += p.getText().strip('\n') + "\n"
+
+  return speech
 
 async def get_inaug_speech_async(url, session):
   pass
@@ -51,6 +55,9 @@ async def run_program(url, session):
     print(f"Exception occurred: {err}")
     pass
 
+r = requests.get(LINCOLN_URL)
+sp = extract_speech_from_page(r)
+pprint(sp)
 
 # async def main():
 #   async with ClientSession() as session:
