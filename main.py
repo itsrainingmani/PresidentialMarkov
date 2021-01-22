@@ -59,11 +59,11 @@ r = requests.get(LINCOLN_URL)
 sp = extract_speech_from_page(r)
 pprint(sp)
 
-# async def main():
-#   async with ClientSession() as session:
-#     # Run awaitable objects in the aws sequence concurrently.
-#     # If any awaitable in aws is a coroutine, it is automatically scheduled as a Task.
-#     # If all awaitables are completed successfully, the result is an aggregate list of returned values. The order of result values corresponds to the order of awaitables in aws.
-#     await asyncio.gather(*[run_program(t, session) for t in PRES_TUPS])
+async def main():
+  async with ClientSession() as session:
+    # Run awaitable objects in the aws sequence concurrently.
+    # If any awaitable in aws is a coroutine, it is automatically scheduled as a Task.
+    # If all awaitables are completed successfully, the result is an aggregate list of returned values. The order of result values corresponds to the order of awaitables in aws.
+    await asyncio.gather(*[run_program(t, session) for t in get_all_speech_links()])
 
-# asyncio.run(main)
+asyncio.run(main)
