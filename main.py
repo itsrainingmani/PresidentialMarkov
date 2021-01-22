@@ -25,12 +25,11 @@ def get_all_speech_links():
       pres_name = pres_name.replace('.asp', '') 
       
       PRES_TUPS.append((pres_name, BASE_URL + relative_link))
-      pprint(PRES_TUPS)
 
   return PRES_TUPS
 
-def extract_speech_from_page(response):
-  soup = BeautifulSoup(response.text, 'html.parser')
+def extract_speech_from_page(response_text):
+  soup = BeautifulSoup(response_text, 'html.parser')
   speech = ""
   
   text_prop_div = soup.find('div', class_='text-properties')
@@ -41,23 +40,33 @@ def extract_speech_from_page(response):
   return speech
 
 async def get_inaug_speech_async(url, session):
-  pass
+  try:
+    response = await session.request(method='GET', url=url)
+    response.raise_for_status()
+    print(f"Response status ({url}): {response.status}")
+  except Exception as err:
+      print(f"An error ocurred: {err}")
+  response_text = await response.text()
+  return response_text
+  
 
-async def run_program(url, session):
+async def run_program(pres, session):
   """Wrapper for running program in an async manner"""
+  name, url = pres
 
   try:
-    response = await get_inaug_speech_async(url, session)
-    parsed_response = extract_speech_from_page(response)
-    with open('speeches/' + parsed_response[0] + '.txt', 'a') as f:
-      f.write(parsed_response[1])
+    response_text = await get_inaug_speech_async(url, session)
+    parsed_response = extract_speech_from_page(response_text)
+    print(f"Writing {url} to speeches/{name}.txt\n")
+    with open('speeches/' + name + '.txt', 'a') as f:
+      f.write(parsed_response)
   except Exception as err:
     print(f"Exception occurred: {err}")
     pass
 
-r = requests.get(LINCOLN_URL)
-sp = extract_speech_from_page(r)
-pprint(sp)
+# r = requests.get(LINCOLN_URL)
+# sp = extract_speech_from_page(r)
+# pprint(sp)
 
 async def main():
   async with ClientSession() as session:
@@ -66,4 +75,4 @@ async def main():
     # If all awaitables are completed successfully, the result is an aggregate list of returned values. The order of result values corresponds to the order of awaitables in aws.
     await asyncio.gather(*[run_program(t, session) for t in get_all_speech_links()])
 
-asyncio.run(main)
+asyncio.run(main())
