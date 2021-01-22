@@ -3,6 +3,8 @@ import aiohttp
 import asyncio
 import os
 
+import speech
+
 from bs4 import BeautifulSoup
 # from collections import defaultdict
 from pprint import pprint
@@ -75,4 +77,7 @@ async def main():
     # If all awaitables are completed successfully, the result is an aggregate list of returned values. The order of result values corresponds to the order of awaitables in aws.
     await asyncio.gather(*[run_program(t, session) for t in get_all_speech_links()])
 
-asyncio.run(main())
+# asyncio.run(main())
+
+# speech.process_folder()
+speech.process_file('carter.txt')
