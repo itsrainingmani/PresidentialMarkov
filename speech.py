@@ -16,12 +16,15 @@ def process_folder():
       speech.write(processed_speech)
 
 def process_file(filename):
-  with open(os.path.join(os.getcwd(), SPEECHES, filename), 'r+') as speech:
+  pr = []
+  file_path = os.path.join(os.getcwd(), SPEECHES, filename)
+  with open(file_path, 'r') as speech:
     s = speech.read().splitlines()
     pr = [i.strip() for i in s]
     # print(type(s))
     # second_line = s[1].strip()
     # pprint(second_line)
 
+  with open(file_path, 'w') as speech:
     speech.write('\n'.join(pr))
     print(f"Wrote to {filename}")
