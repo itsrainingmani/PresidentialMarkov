@@ -79,5 +79,5 @@ async def main():
 
 # asyncio.run(main())
 
-# speech.process_folder()
-speech.process_file('bush.txt')
+speech.process_folder()
+# speech.process_file('bush.txt')

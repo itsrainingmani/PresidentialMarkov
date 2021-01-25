@@ -8,23 +8,18 @@ def process_folder():
 
   for s in os.scandir(SPEECHES):
     print(s.path)
-    processed_speech = ''
-    with open(s.path, 'r+') as speech:
-      for line in speech:
-        processed_speech += line.strip() + '\n'
-      print(f"Writing to {s.path.split('/')[2]}\n")
-      speech.write(processed_speech)
+    process_file(s.path)
 
-def process_file(filename):
+def process_file(path_to_file):
   pr = []
-  file_path = os.path.join(os.getcwd(), SPEECHES, filename)
-  with open(file_path, 'r') as speech:
+  # file_path = os.path.join(os.getcwd(), SPEECHES, path_to_file)
+  with open(path_to_file, 'r') as speech:
     s = speech.read().splitlines()
     pr = [i.strip() for i in s]
     # print(type(s))
     # second_line = s[1].strip()
     # pprint(second_line)
 
-  with open(file_path, 'w') as speech:
+  with open(path_to_file, 'w') as speech:
     speech.write('\n'.join(pr))
-    print(f"Wrote to {filename}")
+    print(f"Wrote to {path_to_file}")
