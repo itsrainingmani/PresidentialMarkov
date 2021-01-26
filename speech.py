@@ -16,9 +16,9 @@ def process_file(path_to_file):
   with open(path_to_file, 'r') as speech:
     s = speech.read().splitlines()
     pr = [i.strip() for i in s]
-    # print(type(s))
-    # second_line = s[1].strip()
-    # pprint(second_line)
+
+    # Construct an iterator from those elements of iterable for which function returns true
+    pr = filter(lambda x: x != '', pr)
 
   with open(path_to_file, 'w') as speech:
     speech.write('\n'.join(pr))

@@ -35,10 +35,12 @@ def extract_speech_from_page(response_text):
   speech = ""
   
   text_prop_div = soup.find('div', class_='text-properties')
+  print(text_prop_div)
 
   for p in text_prop_div.find_all('p'):
     speech += p.getText().strip('\n') + "\n"
 
+  # print(speech[0:10])
   return speech
 
 async def get_inaug_speech_async(url, session):
@@ -49,6 +51,7 @@ async def get_inaug_speech_async(url, session):
   except Exception as err:
       print(f"An error ocurred: {err}")
   response_text = await response.text()
+  # print(f"{url}\n")
   return response_text
   
 
@@ -67,7 +70,7 @@ async def run_program(pres, session):
     pass
 
 # r = requests.get(LINCOLN_URL)
-# sp = extract_speech_from_page(r)
+# sp = extract_speech_from_page(r.text)
 # pprint(sp)
 
 async def main():
@@ -79,5 +82,5 @@ async def main():
 
 # asyncio.run(main())
 
-speech.process_folder()
-# speech.process_file('bush.txt')
+# speech.process_folder()
+speech.process_file('./speeches/clinton1.txt')
