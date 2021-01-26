@@ -82,5 +82,4 @@ async def main():
 
 # asyncio.run(main())
 
-# speech.process_folder()
-speech.process_file('./speeches/clinton1.txt')
+speech.process_folder()
