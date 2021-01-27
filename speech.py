@@ -101,3 +101,15 @@ def process_file(path_to_file):
   with open(path_to_file, 'w') as speech:
     speech.write('\n'.join(pr))
     print(f"Wrote to {path_to_file}")
+
+def load_speeches():
+  """Read all speeches into a string"""
+
+  all_speeches = ""
+  for sp in os.scandir(SPEECHES):
+    with open(sp.path, 'r') as f:
+      speech = f.read()
+      # print(len(speech))
+      all_speeches += speech
+
+  return all_speeches
