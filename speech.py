@@ -113,3 +113,17 @@ def load_speeches():
       all_speeches += speech
 
   return all_speeches
+
+def find_longest_speech():
+  """Iterates through all the speeches and finds the longest one"""
+
+  longest_sp = ""
+  longest_sp_len = 0
+  for sp in os.scandir(SPEECHES):
+    with open(sp.path, 'r') as f:
+      speech = f.read()
+      if len(speech) > longest_sp_len:
+        longest_sp_len = len(speech)
+        longest_sp = sp.path
+  
+  return (longest_sp, longest_sp_len)

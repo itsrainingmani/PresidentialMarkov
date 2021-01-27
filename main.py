@@ -5,5 +5,7 @@ from pprint import pprint
 
 # speech.process_folder()
 
-all_speeches = speech.load_speeches()
-print(len(all_speeches))
+# all_speeches = speech.load_speeches()
+# print(len(all_speeches))
+
+print(speech.find_longest_speech())
