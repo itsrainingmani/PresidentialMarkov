@@ -1,4 +1,5 @@
 import speech
+import markov
 from pprint import pprint
 
 # asyncio.run(speech.download_all_speeches())
@@ -15,12 +16,5 @@ speech = ""
 
 with open(longest_sp, 'r') as f:
   speech = f.read()
-  # print(speech)
 
-speech = speech.replace('\n',' ')
-speech = speech.replace('\t',' ')
-speech = speech.replace('“', ' " ')
-speech = speech.replace('”', ' " ')
-for spaced in ['.','-',',','!','?','(','—',')']:
-    speech = speech.replace(spaced, ' {0} '.format(spaced))
-print(len(speech))
+markov.process_corpus(speech)
